@@ -22,7 +22,8 @@ In principle, the project is expected to be written **mainly in C and C ++**. An
 
 ### Contact
 The contact for questions about the project or tell ideas is: _**kriptastudios@tutamail.com**_.
-Yout can also check our website [Kripta-Studios WEB](https://kripta-studios.github.io/) to read all the news and future features of this project.
+
+You can also check our website [Kripta-Studios WEB](https://kripta-studios.github.io/) to read all the news and future features of this project.
 
 ### IDEA AND PROJECT BY: 
 **_Jinsku Kripta from Kripta Studios_**
