@@ -18,7 +18,7 @@ Is an **open-source project** under the **GPLv3 license** that aims _**to solve 
 
 This entire project in this **month of October 2020** is still in the **first phase** of any project, the most complex phase, in which **we think about how to do all** of this in the most **efficient and fast way possible**. The development of the **kslibs** project is expected to begin in 2021. It is expected to end at the end of 2022. But the time will always depend on the support of the community and the help of other developers, it is an **open-source project** all developers who want to collaborate with ideas, help or directly writing code are all **welcome**.
 
-In principle, the project is expected to be written **mainly in C and C ++**. And for **Windows 10 systems**, although obviously it will try to create compilations for most Linux distributions. If the **community considers** the use of another programming language very necessary, **it will be considered** whether to use a language other than C and C ++.
+In principle, the project is expected to be written **mainly in C and C++**. And for **Windows 10 systems**, although obviously it will try to create compilations for most Linux distributions. If the **community considers** the use of another programming language very necessary, **it will be considered** whether to use a language other than C and C++.
 
 ### Contact
 The contact for questions about the project or tell ideas is: _**[Kripta-Studios mail](mailto:kriptastudios@tutamail.com)**_ 
