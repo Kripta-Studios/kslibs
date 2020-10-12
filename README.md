@@ -21,7 +21,7 @@ This entire project in this **month of October 2020** is still in the **first ph
 In principle, the project is expected to be written **mainly in C and C ++**. And for **Windows 10 systems**, although obviously it will try to create compilations for most Linux distributions. If the **community considers** the use of another programming language very necessary, **it will be considered** whether to use a language other than C and C ++.
 
 ### Contact
-The contact for questions about the project or tell ideas is: _**[Kripta-Studios mail](kriptastudios@tutamail.com)**_.
+The contact for questions about the project or tell ideas is: _**kriptastudios@tutamail.com**_.
 
 You can also check our website [Kripta-Studios WEB](https://kripta-studios.github.io/) to read all the news and future features of this project.
 
