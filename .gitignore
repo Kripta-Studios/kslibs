@@ -9,6 +9,6 @@ bashCMD
 obj/
 src/*.h.gch
 *.h.gch
-
+.silentCMD
 # ignore the testing.py file
 testing.py 

@@ -271,3 +271,5 @@ final:
 	mv src/*.o obj/
 	rm src/*.d
 	rm obj/*.d
+	make -C tools/
+	rm tools/*.d

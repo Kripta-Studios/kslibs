@@ -31,7 +31,7 @@ kslibs::kslibs(std::vector<string>& cmdrgs)
 	
 	//system(CMDCompile.c_str());
 	//LOG(CMDCompile);
-	string testigWitTheBASH = "./bashCMD \'" + CMDCompile + "\' > /dev/null";
+	string testigWitTheBASH = "./.silentCMD \'" + CMDCompile + "\' > /dev/null";
 	system(testigWitTheBASH.c_str());
 
 	if (boolArgs["run"]) runCommand(boolArgs);
