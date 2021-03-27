@@ -9,7 +9,7 @@ Is an **open-source project** under the **GPLv3 license** that aims _**to solve 
 ### Install 
 You have to type exaclty this in a command line:
 ```
-make && g++ silentCMD -o .silentCMD && ./kslibs
+make && make tools/ -o .silentCMD && ./kslibs
 ```
 
 ### The 3 main parts of "kslibs" project
