@@ -1,11 +1,13 @@
 #ifndef LOGA_MACRO
 #define LOGA_MACRO
-#define LOG(a) std::cout << a << '\n'
+#define LOG(text) std::cout << text << '\n'
 #endif // !LOGA_MACRO
+
+#define GET(text, referenceStore) std::cout << text; std::cin >> &referenceStore;
+
 
 #include "kslibs.h"
 #include "fileManager.h"
-#include <iostream>
 
 // Constructors and destructors
 kslibs::~kslibs()
@@ -22,7 +24,10 @@ kslibs::kslibs(std::vector<string>& cmdrgs)
 	cmdArgs = cmdrgs;
 	argsParser(cmdArgs);
 
-	fileManager a;
+	fileManager fileManage;
+	string path = fileManage.getPath();
+	std::map<string, string> infoFromFile = fileManage.getInfoMAP();
+
 
 	if (boolArgs["run"]) runCommand(boolArgs);
 	if (boolArgs["clean"]) cleanCommand(boolArgs);

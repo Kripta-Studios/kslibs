@@ -1,0 +1,11 @@
+# ignore the binary files
+kslibs
+
+# ignore the .vscode folder
+.vscode
+
+# ignore the obj/ folder with the object files
+obj/
+
+# ignore the testing.py file
+testing.py 

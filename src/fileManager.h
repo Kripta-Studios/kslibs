@@ -4,24 +4,31 @@
 #include <fstream>
 #include <iostream>
 #include <string>
+#include <limits>
+#include <map>
 
 using std::string;
 
 class fileManager
 {
 private:
-    std::ifstream* fileIn = new std::ifstream(".config.kslibs");
+    bool existFile;
+    string pathToConfigKslibs;
+    std::ifstream* fileIn;
+    std::map<string, string> containerConfigData;
     
+    // Functions 
+    void notExistFile();
+    void newConfigFile();
+    void configFileParser(string* pathToAConfigFile);
+
 public:
     fileManager(/* args */);
     ~fileManager();
-    void notExistFile();
+    string getPath() {return pathToConfigKslibs;}
+    std::map<string, string> getInfoMAP() {return containerConfigData;};
+    
 };
-
-
-
-
-
 
 
 

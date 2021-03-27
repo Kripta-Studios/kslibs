@@ -269,4 +269,5 @@ show:
 
 final:
 	mv src/*.o obj/
-	mv src/*.d obj/
+	rm src/*.d
+	rm obj/*.d
