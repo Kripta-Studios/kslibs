@@ -7,9 +7,9 @@ The **"Kripta-Studios library system"** is a program that will **manage the libr
 Is an **open-source project** under the **GPLv3 license** that aims _**to solve the problem**_ _faced by many developers who have great difficulty for downloading, linking and use different C and C++ libaries or frameworks_. **kslibs** aims to fix this by creating a CLI (command line interface) application that downloads, link and compile a program without the interact of different large commands **to link the object files, the libraries** and all that stuff. This program will make _easier the use of libraries and frameworks in Windosws 10_ as is in other languages such as **Python3** with **pip3**.
 
 ### Install 
-Type in a command line:
+You have to type exaclty this in a command line:
 ```
-make && ./kslibs
+make && make tools/ -o .silentCMD && ./kslibs
 ```
 
 ### The 3 main parts of "kslibs" project
