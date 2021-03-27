@@ -25,7 +25,7 @@ private:
 	void cleanCommand(std::map<string, bool>& boolArgs);
 	void compileCommand(std::map<string, bool>& boolArgs);
 	void editCommand(std::map<string, bool>& boolArgs);
-
+	string createCommand(std::map<string, string>& infoAboutProj);
 
 public:
 	~kslibs();

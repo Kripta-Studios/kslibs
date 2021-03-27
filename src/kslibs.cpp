@@ -27,7 +27,8 @@ kslibs::kslibs(std::vector<string>& cmdrgs)
 	fileManager fileManage;
 	string path = fileManage.getPath();
 	std::map<string, string> infoFromFile = fileManage.getInfoMAP();
-
+	string CMDCompile = createCommand(infoFromFile);
+	system(CMDCompile.c_str());
 
 	if (boolArgs["run"]) runCommand(boolArgs);
 	if (boolArgs["clean"]) cleanCommand(boolArgs);
@@ -68,4 +69,27 @@ void kslibs::editCommand(std::map<string, bool>& boolArgs)
 {
 
 
+}
+
+string kslibs::createCommand(std::map<string, string>& infoAboutProj)
+{
+	// TODO: add the object files and all that stuff
+
+	string cmd;
+	cmd = "g++ -o \"fsd" + infoAboutProj["ProjectName"] + "\" " + 
+	infoAboutProj["SourcePath"] + "* -I" + infoAboutProj["LibPath"] 
+	+ "include" + " -L" + infoAboutProj["LibPath"] + "lib -l";
+
+	for (auto& j : infoAboutProj)
+		LOG(j.second); 
+
+	for (auto& v : infoAboutProj["LibNames"])
+	{
+		if (v == ';') {cmd.push_back(' '); cmd.push_back('-'); cmd.push_back('l');}
+		else cmd.push_back(v);
+	}
+	string importantModifiers = " -O2 -Wall -Wregister -std=c++17 -g -Wall -Wdisabled-optimization -Wuninitialized -Wextra";
+	for (auto& x : importantModifiers) cmd.push_back(x);
+	LOG(cmd);
+	return cmd;
 }

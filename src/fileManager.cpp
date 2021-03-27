@@ -14,6 +14,7 @@ fileManager::fileManager(/* args */) : pathToConfigKslibs(".config.kslibs"), fil
     
     existFile = fileIn->is_open();  // IF result == 0 THE THE FILE DOESN'T EXIST
     if (existFile == 0) fileManager::notExistFile();
+    else configFileParser(&pathToConfigKslibs);
 }
 
 fileManager::~fileManager()
@@ -39,7 +40,7 @@ trollerInpath:
 
 void fileManager::newConfigFile()
 {
-    // TODO: Add more options and info, and library downloading
+    // TODO: Add more options and info such as output path, object path, and library downloading
 
     // Clean the sreen in POSIX and in Win10
     system("cls||clear");
@@ -59,7 +60,7 @@ void fileManager::newConfigFile()
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     GET("Insert the path of the header files (Ex: .) (Ex: hed/): ", headPath);
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-    GET("Insert the path of the library (Ex: ../extern/SFML/): ", libPath);
+    GET("Insert the path of the library (don't write the inlude/ or lib/ path)(Ex: ../extern/SFML/): ", libPath);
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     std::cout << "Insert the name of the library/ies without the \'-l\'. Use the \';\' as separtor \n(Ex for boost::thread: boost_thread ; boost_system): " ;
     std::getline(std::cin, libNames);
@@ -76,7 +77,7 @@ void fileManager::newConfigFile()
     newFile << "\nLibNames: " + libNames;
     newFile.flush();
     newFile.close();
-
+    pathToConfigKslibs = defaultPath;
     configFileParser(&defaultPath);
 
 }
@@ -155,6 +156,7 @@ void fileManager::configFileParser(string* pathToAConfigFile)
                 {
                     for (int j = i+1; j < line.length(); j++)
                     {
+                        if ((j == i) && (line[j] == ';')) continue;
                         if ( (line[line.length() -1] == ';') && (j == line.length() - 1) ) break; 
                         if (line[j] != ' ')
                             Var.push_back(line[j]);
@@ -166,5 +168,5 @@ void fileManager::configFileParser(string* pathToAConfigFile)
         }
 
     }
-    
+
 }

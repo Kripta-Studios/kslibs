@@ -16,7 +16,7 @@ private:
     string pathToConfigKslibs;
     std::ifstream* fileIn;
     std::map<string, string> containerConfigData;
-    
+
     // Functions 
     void notExistFile();
     void newConfigFile();
