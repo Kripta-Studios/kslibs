@@ -4,7 +4,7 @@ kslibs
 # ignore the .vscode folder
 .vscode
 .config.kslibs
-
+bashCMD
 # ignore the obj/ folder with the object files
 obj/
 src/*.h.gch
