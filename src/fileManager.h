@@ -25,6 +25,8 @@ private:
 public:
     fileManager(/* args */);
     ~fileManager();
+    
+    // GETTERS
     string getPath() {return pathToConfigKslibs;}
     std::map<string, string> getInfoMAP() {return containerConfigData;};
     

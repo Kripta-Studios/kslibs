@@ -166,5 +166,5 @@ void fileManager::configFileParser(string* pathToAConfigFile)
         }
 
     }
-
+    
 }
