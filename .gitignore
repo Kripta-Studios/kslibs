@@ -7,6 +7,6 @@ kslibs
 
 # ignore the obj/ folder with the object files
 obj/
-
+src/*.h.gch
 # ignore the testing.py file
 testing.py 
