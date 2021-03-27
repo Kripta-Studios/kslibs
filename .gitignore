@@ -3,6 +3,7 @@ kslibs
 
 # ignore the .vscode folder
 .vscode
+.config.kslibs
 
 # ignore the obj/ folder with the object files
 obj/
