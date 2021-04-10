@@ -1,6 +1,6 @@
 # ignore the binary files
 kslibs
-
+testing/
 # ignore the .vscode folder
 .vscode
 .config.kslibs

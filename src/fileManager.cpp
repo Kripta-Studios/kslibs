@@ -49,7 +49,7 @@ void fileManager::newConfigFile()
     LOG("###########################################################################\n");
     string defaultPath{".config.kslibs"};
     std::ofstream newFile{defaultPath};
-
+    std::map<int, double> a{};
     // Variable about the data of the project
     string projName, srcPath, headPath, libPath, libNames;
     
