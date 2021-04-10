@@ -21,7 +21,7 @@ private:
 	void argsParser(std::vector<string>& cmdArgs);
 
 	// Commands MANAGERS
-	void runCommand(std::map<string, bool>& boolArgs);
+	void runCommand(std::map<string, string>& infoFromFile);
 	void cleanCommand(std::map<string, bool>& boolArgs);
 	void compileCommand(std::map<string, bool>& boolArgs);
 	void editCommand(std::map<string, bool>& boolArgs);

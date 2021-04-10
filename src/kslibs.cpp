@@ -16,6 +16,7 @@ kslibs::~kslibs()
 }
 kslibs::kslibs(std::vector<string>& cmdrgs)
 {
+	// TODO: the part that create and execute the command should be inside the run func.
 	boolArgs["run"] = false;
 	boolArgs["clean"] = false;
 	boolArgs["compile"] = false;
@@ -23,21 +24,22 @@ kslibs::kslibs(std::vector<string>& cmdrgs)
 
 	cmdArgs = cmdrgs;
 	argsParser(cmdArgs);
-
-	fileManager fileManage;
-	string path = fileManage.getPath();
-	std::map<string, string> infoFromFile = fileManage.getInfoMAP();
+	fileManager fileManager;
+	string path = fileManager.getPath();
+	std::map<string, string> infoFromFile = fileManager.getInfoMAP();
+	/*
 	string CMDCompile = createCommand(infoFromFile);
 	
 	//system(CMDCompile.c_str());
 	//LOG(CMDCompile);
-	string testigWitTheBASH = "./.silentCMD \'" + CMDCompile + "\' > /dev/null";
-	system(testigWitTheBASH.c_str());
-
-	if (boolArgs["run"]) runCommand(boolArgs);
+	string testingWitTheBASH = "./.silentCMD \'" + CMDCompile + "\' > /dev/null";
+	system(testingWitTheBASH.c_str());
+	*/
+	if (boolArgs["run"]) runCommand(infoFromFile);
 	if (boolArgs["clean"]) cleanCommand(boolArgs);
 	if (boolArgs["compile"]) compileCommand(boolArgs);
 	if (boolArgs["edit"]) editCommand(boolArgs);
+	else return;
 }
 
 void kslibs::argsParser(std::vector<string>& cmdArgs)
@@ -51,10 +53,15 @@ void kslibs::argsParser(std::vector<string>& cmdArgs)
  	}
 }
 // TODO: all the functions for the commands
-void kslibs::runCommand(std::map<string, bool>& boolArgs)
+void kslibs::runCommand(std::map<string, string>& infoFromFile)
 {
-
-
+	string CMDCompile = createCommand(infoFromFile);
+	
+	//system(CMDCompile.c_str());
+	//LOG(CMDCompile);
+	string testingWitTheBASH = "./.silentCMD \'" + CMDCompile + "\' > /dev/null";
+	system(testingWitTheBASH.c_str());
+	LOG(testingWitTheBASH);
 }
 
 void kslibs::cleanCommand(std::map<string, bool>& boolArgs)
@@ -80,18 +87,29 @@ string kslibs::createCommand(std::map<string, string>& infoAboutProj)
 	// TODO: add the object files and all that stuff
 
 	string cmd;
-	cmd = "g++ -o \"" + infoAboutProj["ProjectName"] + "\" " + 
-	infoAboutProj["SourcePath"] + "* -I" + infoAboutProj["LibPath"] 
-	+ "include" + " -L" + infoAboutProj["LibPath"] + "lib -l";
+	//cmd = "g++ -o \"" + infoAboutProj["ProjectName"] + "\" " + 
+	//infoAboutProj["SourcePath"] + "* -I" + infoAboutProj["LibPath"] 
+	//+ "include" + " -L" + infoAboutProj["LibPath"] + "lib -l";
 
-	for (auto& j : infoAboutProj)
-		LOG(j.second); 
+	cmd = "g++ -o \"" + infoAboutProj["ProjectName"] + "\" ";
+	if (infoAboutProj["SourcePath"] != ".") 
+		cmd += infoAboutProj["SourcePath"] + "*";
+	else cmd += ".";
 
-	for (auto& v : infoAboutProj["LibNames"])
+	if (infoAboutProj["LibPath"] != "NULL/")
+		cmd += " -I" + infoAboutProj["LibPath"] + "include" + " -L" + infoAboutProj["LibPath"] + "lib -l";
+	else cmd += " ";
+
+	if (infoAboutProj["LibNames"] != "NULL")
 	{
-		if (v == ';') {cmd.push_back(' '); cmd.push_back('-'); cmd.push_back('l');}
-		else cmd.push_back(v);
+		for (auto& v : infoAboutProj["LibNames"])
+		{
+			if (v == ';') {cmd.push_back(' '); cmd.push_back('-'); cmd.push_back('l');}
+			else cmd.push_back(v);
+		}
 	}
+	else cmd += " ";
+	
 	string importantModifiers = " -O2 -Wall -Wregister -std=c++17 -g -Wall -Wdisabled-optimization -Wuninitialized -Wextra";
 	for (auto& x : importantModifiers) cmd.push_back(x);
 	//LOG(cmd);

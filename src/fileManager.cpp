@@ -49,7 +49,7 @@ void fileManager::newConfigFile()
     LOG("###########################################################################\n");
     string defaultPath{".config.kslibs"};
     std::ofstream newFile{defaultPath};
-    std::map<int, double> a{};
+    std::map<int, double> a;
     // Variable about the data of the project
     string projName, srcPath, headPath, libPath, libNames;
     
@@ -60,9 +60,9 @@ void fileManager::newConfigFile()
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     GET("Insert the path of the header files (Ex: .) (Ex: hed/): ", headPath);
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-    GET("Insert the path of the library (don't write the inlude/ or lib/ path)(Ex: ../extern/SFML/): ", libPath);
+    GET("Insert the path of the library (don't write the include/ or lib/ path)(Ex: ../extern/SFML/)(NULL): ", libPath);
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-    std::cout << "Insert the name of the library/ies without the \'-l\'. Use the \';\' as separtor \n(Ex for boost::thread: boost_thread ; boost_system): " ;
+    std::cout << "Insert the name of the library/ies without the \'-l\'. Use the \';\' as separtor \n(Ex for boost::thread: boost_thread ; boost_system)(NULL): " ;
     std::getline(std::cin, libNames);
 
     // Writing to the file
@@ -166,7 +166,16 @@ void fileManager::configFileParser(string* pathToAConfigFile)
             }
             containerConfigData["LibNames"] = Var;
         }
+    }
 
+    if ((containerConfigData.empty() == true) || (containerConfigData.find("ProjectName") == containerConfigData.end()) 
+        || (containerConfigData.find("SourcePath")  == containerConfigData.end()) || (containerConfigData.find("HeadersPath")== containerConfigData.end()) 
+        || (containerConfigData.find("LibPath")  == containerConfigData.end())    || ((containerConfigData.find("LibNames"))  == containerConfigData.end())
+        || (containerConfigData["ProjectName"].empty()) || (containerConfigData["SourcePath"].empty()) || (containerConfigData["HeadersPath"].empty())
+        || (containerConfigData["LibPath"].empty())     || (containerConfigData["LibNames"].empty()))
+    {
+        LOG("The file \'.confg.kslibs\' is corrupt or empty. You should create a new one.");
+        notExistFile();
     }
 
 }
