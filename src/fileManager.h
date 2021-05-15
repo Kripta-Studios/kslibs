@@ -23,12 +23,14 @@ private:
     void configFileParser(string* pathToAConfigFile);
 
 public:
-    fileManager(/* args */);
+    fileManager(string pathConfigFile);
+    fileManager();
     ~fileManager();
     
     // GETTERS functions
     string getPath() {return pathToConfigKslibs;}
     std::map<string, string> getInfoMAP() {return containerConfigData;};
+    void resetFile(std::map<string, string> newDataToFile);
     
 };
 

@@ -12,3 +12,5 @@ src/*.h.gch
 .silentCMD
 # ignore the testing.py file
 testing.py 
+TODO.txt
+tasksToDo.txt

@@ -23,9 +23,10 @@ private:
 	// Commands MANAGERS
 	void runCommand(std::map<string, string>& infoFromFile);
 	void cleanCommand(std::map<string, bool>& boolArgs);
-	void compileCommand(std::map<string, bool>& boolArgs);
-	void editCommand(std::map<string, bool>& boolArgs);
+	void compileCommand(std::map<string, string>& infoFromFile);
+	void editCommand(std::map<string, string>& infoFromFile, string& pathToConfig);
 	string createCommand(std::map<string, string>& infoAboutProj);
+	void printHelp(std::map<string, string>& infoFromFile);
 
 public:
 	~kslibs();
@@ -33,5 +34,5 @@ public:
 	
 };
 
-
 #endif // !KSLIBS_H
+
