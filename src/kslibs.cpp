@@ -22,24 +22,19 @@ kslibs::kslibs(std::vector<string>& cmdrgs)
 	boolArgs["clean"] = false;
 	boolArgs["compile"] = false;
 	boolArgs["edit"] = false;
+	boolArgs["show"] = false;
 
 	cmdArgs = cmdrgs;
 	argsParser(cmdArgs);
 	fileManager fileManager;
 	string path = fileManager.getPath();
 	std::map<string, string> infoFromFile = fileManager.getInfoMAP();
-	/*
-	string CMDCompile = createCommand(infoFromFile);
-	
-	//system(CMDCompile.c_str());
-	//LOG(CMDCompile);
-	string testingWitTheBASH = "./.silentCMD \'" + CMDCompile + "\' > /dev/null";
-	system(testingWitTheBASH.c_str());
-	*/
+
 	if (boolArgs["run"]) runCommand(infoFromFile);
 	else if (boolArgs["clean"]) cleanCommand(boolArgs);
 	else if (boolArgs["compile"]) compileCommand(infoFromFile);
 	else if (boolArgs["edit"]) editCommand(infoFromFile, path);
+	else if (boolArgs["show"]) showCommand(infoFromFile);
 	else printHelp(infoFromFile);
 }
 
@@ -51,6 +46,7 @@ void kslibs::argsParser(std::vector<string>& cmdArgs)
 		else if (v == "-cln") boolArgs["clean"] = true;
 		else if (v == "-c") boolArgs["compile"] = true;
 		else if (v == "-ed") boolArgs["edit"] = true;
+		else if (v == "-cmd") boolArgs["show"] = true;
  	}
 }
 // TODO: all the functions for the commands
@@ -87,15 +83,18 @@ void kslibs::editCommand(std::map<string, string>& infoFromFile, string& pathToC
 	cmdEdit.editCMD();
 }
 
+void kslibs::showCommand(std::map<string, string>& infoFromFile)
+{
+	string showCMD = createCommand(infoFromFile);
+	std::cout << rang::style::bold << rang::fg::green <<"\nThe following cmd is used to compile the project:\n--> " << showCMD.c_str() 
+	<< rang::style::reset << rang::fg::reset << rang::bg::reset;
+}
+
 string kslibs::createCommand(std::map<string, string>& infoAboutProj)
 {
 	// TODO: add the object files and all that stuff
 
 	string cmd;
-	//cmd = "g++ -o \"" + infoAboutProj["ProjectName"] + "\" " + 
-	//infoAboutProj["SourcePath"] + "* -I" + infoAboutProj["LibPath"] 
-	//+ "include" + " -L" + infoAboutProj["LibPath"] + "lib -l";
-	//LOG(infoAboutProj["OutputName"]);
 	cmd = "g++ -o \"" + infoAboutProj["OutputName"] + "\" ";
 	if (infoAboutProj["SourcePath"] != ".")
 	{
@@ -149,43 +148,109 @@ string kslibs::createCommand(std::map<string, string>& infoAboutProj)
 			if (v == ';') {cmd.push_back(' ');}
 			else cmd.push_back(v);
 		}
-		/*
-		if ((infoAboutProj["SourcePath"][infoAboutProj["SourcePath"].length() - 1] != 'p') &&
-				(infoAboutProj["SourcePath"][infoAboutProj["SourcePath"].length() - 2] != 'p') &&
-				(infoAboutProj["SourcePath"][infoAboutProj["SourcePath"].length() - 3] != 'c') &&
-				(infoAboutProj["SourcePath"][infoAboutProj["SourcePath"].length() - 1] != '.'))
-				cmd += infoAboutProj["SourcePath"] + "*.cpp";
-			else cmd += infoAboutProj["SourcePath"];
-		
-		for (auto& v : infoAboutProj["LibNames"])
-		{
-			if (v == ';') {cmd.push_back(' '); cmd.push_back('-'); cmd.push_back('l');}
-			else cmd.push_back(v);
-		}
-		*/
-
 	} 
 	else cmd += ".";
 
-	// TODO: check correctly if the paths without extensions are the same, and then use the -I flag or not
-	/*
-	if (infoAboutProj["HeadersPath"] != infoAboutProj["SourcePath"])
+	if ((infoAboutProj["HeadersPath"] != "."))
 	{
-		if ((infoAboutProj["HeadersPath"][infoAboutProj["HeadersPath"].length() - 1] != 'h') &&
-			(infoAboutProj["HeadersPath"][infoAboutProj["HeadersPath"].length() - 2] != '.'))
-			cmd += " -I" + infoAboutProj["HeadersPath"] + "*.h";
-		else cmd += " -I" + infoAboutProj["HeadersPath"];
-
+		string copy;
+		infoAboutProj["HeadersPath"] += ';';
+		
+		for (uint8_t it = 0; it < infoAboutProj["HeadersPath"].length() -1; ++it)
+		{
+			string newHeadPath;
+			if (it == 0)
+			{
+				newHeadPath.clear();
+				for (uint8_t ij = it; infoAboutProj["HeadersPath"][ij] != ';'; ++ij)
+				{
+					if (infoAboutProj["HeadersPath"][ij+1] == ';')
+					{
+						newHeadPath += infoAboutProj["HeadersPath"][ij];
+						if ((newHeadPath.find(".h") == string::npos) && (newHeadPath.find(".hpp") == string::npos))
+						{
+							// TODO: ADD A *.hpp IDK HOW TO DO IT, THINK ABOUT IT
+							newHeadPath += "*.h";
+						}
+					} 
+					else newHeadPath += infoAboutProj["HeadersPath"][ij];
+				}
+				copy+= newHeadPath + ';';
+			}
+			if (infoAboutProj["HeadersPath"][it] == ';')
+			{
+				newHeadPath.clear();
+				for (uint8_t ij = it+1;(infoAboutProj["HeadersPath"][ij] != ';'); ++ij)
+				{
+					if (infoAboutProj["HeadersPath"][ij+1] == ';')
+					{
+						newHeadPath += infoAboutProj["HeadersPath"][ij];
+						if ((newHeadPath.find(".h") == string::npos) || (newHeadPath.find(".hpp") == string::npos))
+						{
+							// TODO: ADD A *.hpp IDK HOW TO DO IT, THINK ABOUT IT
+							//newHeadPath += "*.h";
+							continue;	
+						}
+					} 
+					else newHeadPath += infoAboutProj["HeadersPath"][ij];
+				}
+				copy+= newHeadPath + ';';
+			}
+		}
+		infoAboutProj["HeadersPath"] = copy;
 	} 
 	else ;
-	*/
+
+	for (uint8_t i = infoAboutProj["HeadersPath"].length() - 1; i > 0; --i)
+	{
+		if ( ((infoAboutProj["HeadersPath"][i] == 'p') && (infoAboutProj["HeadersPath"][i-1] == 'p') && (infoAboutProj["HeadersPath"][i-2] == 'h') && (infoAboutProj["HeadersPath"][i-3] == '.'))  || ((infoAboutProj["HeadersPath"][i] == 'h') && (infoAboutProj["HeadersPath"][i-1] == '.')))
+		{
+			 while (infoAboutProj["HeadersPath"][i] != '.')
+			 {
+				infoAboutProj["HeadersPath"][i] = ' ';
+				--i;
+			 }
+			 infoAboutProj["HeadersPath"][i] = ' ';
+		}
+	}
+	for (uint8_t i = infoAboutProj["HeadersPath"].length() - 1; i > 0; --i)
+	{
+		if (infoAboutProj["HeadersPath"][i] == '*')
+			infoAboutProj["HeadersPath"][i] = ' ';
+	}
+
+	if ((cmd[cmd.length() - 3] != ' ') && (cmd[cmd.length() - 3] != '-') && (cmd[cmd.length() - 1] != 'I'))
+		cmd += " -I";
+
+	if (infoAboutProj["HeadersPath"] != ".")
+	{
+		for (auto& v : infoAboutProj["HeadersPath"])
+		{
+			// TODO: UN FOR CLASSIC PARA SABER SI EL SIGUIENTE ES HPP
+			if (v == ';') {cmd.push_back(' '); cmd.push_back('-'); cmd.push_back('I');}
+			// TODO: CON FOR CLASSIC MIRAR SI ES HPP O BUSCAR FORMA DE ELIMINAR LOS HPP
+			else if ((v == '.' ) || (v == 'h' ) || (v == '.' ) || (v == '.' )) continue;
+			else cmd.push_back(v);
+		}
+	}
+	cmd.push_back(' ');
+	for (uint8_t i = 0; i < cmd.length(); ++i)
+	{
+		if ((cmd[i] == 'I') && (cmd[i-1] == '-') && (cmd[i+1] == ' '))
+		{
+			cmd[i] = ' ';
+			cmd[i - 1] = ' ';
+			cmd[i + 1] = ' ';
+		}
+	}
 
 	if (infoAboutProj["LibPath"] != "NULL/")
 		cmd += " -I" + infoAboutProj["LibPath"] + "include" + " -L" + infoAboutProj["LibPath"] + "lib -l";
-	else cmd += " -l";
+	else;
 
 	if (infoAboutProj["LibNames"] != "NULL")
 	{
+		cmd += " -l";
 		for (auto& v : infoAboutProj["LibNames"])
 		{
 			if (v == ';') {cmd.push_back(' '); cmd.push_back('-'); cmd.push_back('l');}
@@ -193,20 +258,32 @@ string kslibs::createCommand(std::map<string, string>& infoAboutProj)
 		}
 	}
 	else cmd += " ";
-	
+	uint8_t passedQuote = 0;
+	string formattedCmd;
+	for (uint8_t i = 0; i < cmd.length(); ++i)
+	{
+		if (cmd[i] == '\"') ++passedQuote;
+		if ((passedQuote >= 2) && (cmd[i-1] == ' ') && (cmd[i] == ' ') )
+			continue;
+		else formattedCmd += cmd[i];
+	}
+
+	cmd = formattedCmd;
+
 	string importantModifiers = " -O2 -Wall -Wregister -std=c++17 -g -Wall -Wdisabled-optimization -Wuninitialized -Wextra";
 	for (auto& x : importantModifiers) cmd.push_back(x);
-	LOG(cmd);
+
 	return cmd;
 }
 
 void kslibs::printHelp(std::map<string, string>& infoFromFile)
 {
 	std::cout 	<< "Options availables:\n"
-				<< "RUN project:\t\t-r\n"
-				<< "CLEAN project:\t\t-cln\n"
-				<< "COMPILE project:\t-c\n"
-				<< "EDIT configuration:\t-ed\n"
+				<< "RUN project:\t\t\t-r\n"
+				<< "CLEAN project:\t\t\t-cln\n"
+				<< "COMPILE project:\t\t-c\n"
+				<< "EDIT configuration:\t\t-ed\n"
+				<< "SHOW command to compile:\t-cmd\n"
 				<< "\n"
 				<< "ACTUAL INFORMATION OF THE PROJECT";
 	printf("\nProject Name:\t");

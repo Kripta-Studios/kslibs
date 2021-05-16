@@ -1,6 +1,9 @@
 #ifndef KSLIBS_H
 #define KSLIBS_H
 
+// EXTERNAL INCLUDES 
+#include "rang.hpp" // MUST BE ABOVE EVERYTHING
+
 #include <vector>
 #include <string>
 #include <map>
@@ -25,6 +28,7 @@ private:
 	void cleanCommand(std::map<string, bool>& boolArgs);
 	void compileCommand(std::map<string, string>& infoFromFile);
 	void editCommand(std::map<string, string>& infoFromFile, string& pathToConfig);
+	void showCommand(std::map<string, string>& infoFromFile);
 	string createCommand(std::map<string, string>& infoAboutProj);
 	void printHelp(std::map<string, string>& infoFromFile);
 

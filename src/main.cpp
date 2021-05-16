@@ -5,12 +5,17 @@
 
 #define GET(text, referenceStore) std::cout << text; std::cin >> &referenceStore;
 
+#include "kslibs.h" // MUST BE ABOVE EVERYTHING
+
 #include <iostream>
 #include <string>
 #include <vector>
 #include <memory>
 
-#include "kslibs.h"
+// EXTERNAL DEPENDENCIES
+
+
+
 // sha1sum src/something Get-FileHash src/something -Algorithm sha1  
 // that is for knowing if a file changed. 
 int main(int argc, char* argv[])
