@@ -278,7 +278,7 @@ string kslibs::createCommand(std::map<string, string>& infoAboutProj)
 
 void kslibs::printHelp(std::map<string, string>& infoFromFile)
 {
-	std::cout 	<< "Options availables:\n"
+	std::cout 	<< "\nOptions availables:\n"
 				<< "RUN project:\t\t\t-r\n"
 				<< "CLEAN project:\t\t\t-cln\n"
 				<< "COMPILE project:\t\t-c\n"

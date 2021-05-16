@@ -35,9 +35,10 @@ fileManager::~fileManager()
 // TODO:
 void fileManager::notExistFile()
 {
-    LOG("In the current doesn't exist a \'.config.kslibs\' file.\n");
+    LOG("In the current  directory doesn't exist a \'.config.kslibs\' file.\n");
 trollerInpath:
     GET("Enter the path to your \'.config.kslibs\' file \nor enter \'newkslibs\' to create a new one or \'exit\': ", pathToConfigKslibs);
+
     if (pathToConfigKslibs == "exit") {return;}
     if (pathToConfigKslibs == "newkslibs") {newConfigFile(); return;}
     else
