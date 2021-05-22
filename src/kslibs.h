@@ -3,6 +3,9 @@
 
 // EXTERNAL INCLUDES 
 #include "rang.hpp" // MUST BE ABOVE EVERYTHING
+#include "fileManager.h"
+#include "cmdEditor.h"
+#include "macroUtils.h"
 
 #include <vector>
 #include <string>

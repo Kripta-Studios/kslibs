@@ -1,5 +1,7 @@
 #ifndef FILEMANAGER_H
 #define FILEMANAGER_H
+#include "rang.hpp" // MUST BE ABOVE EVERYTHING
+#include "macroUtils.h"
 
 #include <fstream>
 #include <iostream>

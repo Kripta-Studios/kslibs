@@ -1,10 +1,5 @@
 #include "cmdEditor.h"
 
-#ifndef LOGA_MACRO
-#define LOGA_MACRO
-#define LOG(text) std::cout << text << '\n'
-#endif // !LOGA_MACRO
-
 cmdEditor::cmdEditor(std::map<string, string>& infoFromFile, string& pathToConfig)
 {
     this->infoFromFile = infoFromFile;

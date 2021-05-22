@@ -1,19 +1,9 @@
-#ifndef LOGA_MACRO
-#define LOGA_MACRO
-#define LOG(text) std::cout << text << '\n'
-#endif // !LOGA_MACRO
-
-#define GET(text, referenceStore) std::cout << text; std::cin >> &referenceStore;
-
-
 #include "kslibs.h"
-#include "fileManager.h"
-#include "cmdEditor.h"
 
 // Constructors and destructors
 kslibs::~kslibs()
 {
-	std::cout << "Destructor called \n";	
+	RANGL(rang::fg::red, rang::style::blink, "\nDestructor called\n");	
 }
 kslibs::kslibs(std::vector<string>& cmdrgs)
 {
@@ -86,8 +76,7 @@ void kslibs::editCommand(std::map<string, string>& infoFromFile, string& pathToC
 void kslibs::showCommand(std::map<string, string>& infoFromFile)
 {
 	string showCMD = createCommand(infoFromFile);
-	std::cout << rang::style::bold << rang::fg::green <<"\nThe following cmd is used to compile the project:\n--> " << showCMD.c_str() 
-	<< rang::style::reset << rang::fg::reset << rang::bg::reset;
+	RANGL(rang::style::bold, rang::fg::green, "\nThe following cmd is used to compile the project:\n--> ", showCMD.c_str() );
 }
 
 string kslibs::createCommand(std::map<string, string>& infoAboutProj)
@@ -278,15 +267,16 @@ string kslibs::createCommand(std::map<string, string>& infoAboutProj)
 
 void kslibs::printHelp(std::map<string, string>& infoFromFile)
 {
-	std::cout 	<< "\nOptions availables:\n"
-				<< "RUN project:\t\t\t-r\n"
-				<< "CLEAN project:\t\t\t-cln\n"
-				<< "COMPILE project:\t\t-c\n"
-				<< "EDIT configuration:\t\t-ed\n"
-				<< "SHOW command to compile:\t-cmd\n"
-				<< "\n"
-				<< "ACTUAL INFORMATION OF THE PROJECT";
-	printf("\nProject Name:\t");
+	RANGL(rang::style::underline, rang::style::reversed, rang::fg::cyan,"\nOptions availables:");
+	RANGL(rang::style::bold, rang::fg::yellow,"RUN project:\t\t\t",rang::style::reversed        ,rang::fg::black,"-r");
+	RANGL(rang::style::bold, rang::fg::yellow,"CLEAN project:\t\t\t",rang::style::reversed      ,rang::fg::black,"-cln");
+	RANGL(rang::style::bold, rang::fg::yellow,"COMPILE project:\t\t",rang::style::reversed      ,rang::fg::black,"-c");
+	RANGL(rang::style::bold, rang::fg::yellow,"EDIT configuration:\t\t",rang::style::reversed   ,rang::fg::black,"-ed");
+	RANGL(rang::style::bold, rang::fg::yellow,"SHOW command to compile:\t",rang::style::reversed,rang::fg::black,"-cmd");
+	RANGL(rang::style::bold, rang::fg::yellow," ");
+	RANGL(rang::style::reversed, rang::fg::red,"ACTUAL INFORMATION OF THE PROJECT:");
+	
+	printf("Project Name:\t");
     printf(infoFromFile["ProjectName"].c_str());
     printf("\nOutput Name:\t");
     printf(infoFromFile["OutputName"].c_str());

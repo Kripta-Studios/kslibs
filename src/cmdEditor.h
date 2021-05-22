@@ -1,11 +1,14 @@
 #ifndef CMDEDITOR_H
 #define CMDEDITOR_H
 
+#include "rang.hpp"
+#include "fileManager.h"
+#include "macroUtils.h"
+
 #include <string>
 #include <map>
 #include <iostream>
 #include <stdio.h>
-#include "fileManager.h"
 
 using std::string;
 

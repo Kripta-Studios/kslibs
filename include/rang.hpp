@@ -1,3 +1,81 @@
+// Is a library under "The Unlicense"
+// due to that im gonna modify it, so this is not 
+// an original copy of the lib
+// **Text Styles**:
+//
+// | Code | Linux/Win/Others | Old Win
+// | ---- | --------- | ------ |
+// | `rang::style::bold`      | yes   | yes   |
+// | `rang::style::dim`       | yes   | no    |
+// | `rang::style::italic`    | yes   | no    |
+// | `rang::style::underline` | yes   | no    |
+// | `rang::style::blink`     | no    | no    |
+// | `rang::style::rblink`    | no    | no    |
+// | `rang::style::reversed`  | yes   | yes   |
+// | `rang::style::conceal`   | maybe | yes   |
+// | `rang::style::crossed`   | yes   | no    |
+
+// **Text Color**:
+
+// | Code | Linux/Win/Others | Old Win
+// | ---- | --------- | ------ |
+// | `rang::fg::black`     | yes | yes |
+// | `rang::fg::red`       | yes | yes |
+// | `rang::fg::green`     | yes | yes |
+// | `rang::fg::yellow`    | yes | yes |
+// | `rang::fg::blue`      | yes | yes |
+// | `rang::fg::magenta`   | yes | yes |
+// | `rang::fg::cyan`      | yes | yes |
+// | `rang::fg::gray`      | yes | yes |
+
+// **Background Color**:
+
+// | Code | Linux/Win/Others | Old Win
+// | ---- | --------- | ------ |
+// | `rang::bg::black`     | yes | yes |
+// | `rang::bg::red`       | yes | yes |
+// | `rang::bg::green`     | yes | yes |
+// | `rang::bg::yellow`    | yes | yes |
+// | `rang::bg::blue`      | yes | yes |
+// | `rang::bg::magenta`   | yes | yes |
+// | `rang::bg::cyan`      | yes | yes |
+// | `rang::bg::gray`      | yes | yes |
+
+// **Bright Foreground Color**:
+
+// | Code | Linux/Win/Others | Old Win
+// | ---- | --------- | ------ |
+// | `rang::fgB::black`     | yes | yes |
+// | `rang::fgB::red`       | yes | yes |
+// | `rang::fgB::green`     | yes | yes |
+// | `rang::fgB::yellow`    | yes | yes |
+// | `rang::fgB::blue`      | yes | yes |
+// | `rang::fgB::magenta`   | yes | yes |
+// | `rang::fgB::cyan`      | yes | yes |
+// | `rang::fgB::gray`      | yes | yes |
+
+// **Bright Background Color**:
+
+// | Code | Linux/Win/Others | Old Win
+// | ---- | --------- | ------ |
+// | `rang::bgB::black`     | yes | yes |
+// | `rang::bgB::red`       | yes | yes |
+// | `rang::bgB::green`     | yes | yes |
+// | `rang::bgB::yellow`    | yes | yes |
+// | `rang::bgB::blue`      | yes | yes |
+// | `rang::bgB::magenta`   | yes | yes |
+// | `rang::bgB::cyan`      | yes | yes |
+// | `rang::bgB::gray`      | yes | yes |
+
+// **Reset Styles/Colors**:
+
+// | Code | Linux/Win/Others | Old Win
+// | ---- | --------- | ------ |
+// | `rang::style::reset`  | yes   | yes |
+// | `rang::fg::reset`     | yes   | yes |
+// | `rang::bg::reset`     | yes   | yes |
+
+
 #ifndef RANG_DOT_HPP
 #define RANG_DOT_HPP
 
@@ -494,6 +572,12 @@ inline void setControlMode(const control value) noexcept
 }
 
 }  // namespace rang
+
+#define RG_RST_STY rang::style::reset
+#define RG_RST_FG rang::fg::reset
+#define RG_RST_BG rang::bg::reset
+#define RG_RST_ALL rang::style::reset << rang::fg::reset << rang::bg::reset
+
 
 #undef OS_LINUX
 #undef OS_WIN

@@ -1,16 +1,9 @@
-#ifndef LOGA_MACRO
-#define LOGA_MACRO
-#define LOG(text) std::cout << text << '\n'
-#endif // !LOGA_MACRO
-
-#define GET(text, referenceStore) std::cout << text; std::cin >> referenceStore;
-
-
 #include "fileManager.h"
 
 
 fileManager::fileManager(string pathConfigFile)
 {
+    std::cout << rang::fg::black;
     this->pathToConfigKslibs = pathConfigFile;
     this->fileIn = new std::ifstream(pathToConfigKslibs);
     existFile = fileIn->is_open();  // IF result == 0 THE THE FILE DOESN'T EXIST
@@ -35,10 +28,10 @@ fileManager::~fileManager()
 // TODO:
 void fileManager::notExistFile()
 {
-    LOG("In the current  directory doesn't exist a \'.config.kslibs\' file.\n");
+    LOGF(cyan,"In the current  directory doesn't exist a \'.config.kslibs\' file.\n");
 trollerInpath:
-    GET("Enter the path to your \'.config.kslibs\' file \nor enter \'newkslibs\' to create a new one or \'exit\': ", pathToConfigKslibs);
-
+    std::cout << rang::fg::cyan << "Enter the path to your \'.config.kslibs\' file \nor enter \'newkslibs\' to create a new one or \'exit\': " << rang::fg::reset;
+    std::cin >> pathToConfigKslibs;
     if (pathToConfigKslibs == "exit") {return;}
     if (pathToConfigKslibs == "newkslibs") {newConfigFile(); return;}
     else
@@ -58,9 +51,9 @@ void fileManager::newConfigFile()
 
     // Clean the sreen in POSIX and in Win10
     system("cls||clear");
-    LOG("###########################################################################");
-    LOG("#                  WELCOME TO THE KSLIBS PROJECTS CREATOR                 #");
-    LOG("###########################################################################\n");
+    LOGRG(reversed, reset, black, "                                                                           ");
+    LOGRG(reversed, reset, red,   "                   WELCOME TO THE KSLIBS PROJECTS CREATOR                  ");
+    LOGRG(reversed, reset, yellow,"                                                                           \n");
     string defaultPath{".config.kslibs"};
     std::ofstream newFile{defaultPath};
     
@@ -68,17 +61,20 @@ void fileManager::newConfigFile()
     string projName, outputNameAndPath, srcPath, headPath, libPath, libNames;
     
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-    std::cout << "Insert the name of the project: ";
+    std::cout << rang::fg::cyan << "Insert the name of the project: " << RG_RST_ALL;
     std::getline(std::cin, projName);
-    std::cout << "Insert the name and path of the output file (Ex. folder/exec ): ";
+    std::cout << rang::fg::cyan << "Insert the name and path of the output file (Ex. folder/exec ): " << RG_RST_ALL;
     std::getline(std::cin, outputNameAndPath);
-    GET("Insert the path of the source files (Ex: .) (Ex: src/;fs/main.cpp): ", srcPath);
+    std::cout << rang::fg::cyan << "Insert the path of the source files (Ex: .) (Ex: src/;fs/main.cpp): " << RG_RST_ALL;
+    std::cin >> srcPath;
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-    GET("Insert the path of the header files (Ex: .) (Ex: head/;fs/headf.h): ", headPath);
+    std::cout << rang::fg::cyan << "Insert the path of the header files (Ex: .) (Ex: head/;fs/headf.h): " << RG_RST_ALL;
+    std::cin >> headPath;
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-    GET("Insert the path of the library (don't write the include/ or lib/ path)(Ex: ../extern/SFML/)(NULL): ", libPath);
+    std::cout << rang::fg::cyan << "Insert the path of the library (don't write the include/ or lib/ path)(Ex: ../extern/SFML/)(NULL): " << RG_RST_ALL;
+    std::cin >> libPath;
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-    std::cout << "Insert the name of the library/ies without the \'-l\'. Use the \';\' as separtor \n(Ex for boost::thread: boost_thread ; boost_system)(NULL): " ;
+    std::cout << rang::fg::cyan << "Insert the name of the library/ies without the \'-l\'. Use the \';\' as separtor \n(Ex for boost::thread: boost_thread ; boost_system)(NULL): " << RG_RST_ALL;
     std::getline(std::cin, libNames);
 
     // Writing to the file
@@ -229,7 +225,7 @@ void fileManager::configFileParser(string* pathToAConfigFile)
         || (containerConfigData["ProjectName"].empty()) || (containerConfigData["SourcePath"].empty()) || (containerConfigData["HeadersPath"].empty())
         || (containerConfigData["LibPath"].empty())     || (containerConfigData["LibNames"].empty()) || (containerConfigData["OutputName"].empty()))
     {
-        LOG("The file \'.confg.kslibs\' is corrupt or empty. You should create a new one.");
+        LOGF(magenta,"The file \'.confg.kslibs\' is corrupt or empty. You should create a new one.");
         notExistFile();
     }
 

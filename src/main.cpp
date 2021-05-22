@@ -1,10 +1,3 @@
-#ifndef LOGA_MACRO
-#define LOGA_MACRO
-#define LOG(text) std::cout << text << '\n'
-#endif // !LOGA_MACRO
-
-#define GET(text, referenceStore) std::cout << text; std::cin >> &referenceStore;
-
 #include "kslibs.h" // MUST BE ABOVE EVERYTHING
 
 #include <iostream>
