@@ -13,6 +13,7 @@ kslibs::kslibs(std::vector<string>& cmdrgs)
 	boolArgs["compile"] = false;
 	boolArgs["edit"] = false;
 	boolArgs["show"] = false;
+	boolArgs["download"] = false;
 
 	cmdArgs = cmdrgs;
 	argsParser(cmdArgs);
@@ -25,6 +26,7 @@ kslibs::kslibs(std::vector<string>& cmdrgs)
 	else if (boolArgs["compile"]) compileCommand(infoFromFile);
 	else if (boolArgs["edit"]) editCommand(infoFromFile, path);
 	else if (boolArgs["show"]) showCommand(infoFromFile);
+	else if (boolArgs["download"]) downloadCommand(cmdArgs, cmdArgs[2]);
 	else printHelp(infoFromFile);
 }
 
@@ -37,7 +39,9 @@ void kslibs::argsParser(std::vector<string>& cmdArgs)
 		else if (v == "-c") boolArgs["compile"] = true;
 		else if (v == "-ed") boolArgs["edit"] = true;
 		else if (v == "-cmd") boolArgs["show"] = true;
- 	}
+		else if ((v == "-dowl") && (cmdArgs.size() >= 3)) boolArgs["download"] = true;
+		else if ((v == "-dowl") && (cmdArgs.size() < 3)) RANGL(rang::style::reversed, rang::fg::red, "Not enough arguments to the option -dowl. REQUIRED: 3; GIVEN: ", cmdArgs.size())
+	 }
 }
 // TODO: all the functions for the commands
 void kslibs::runCommand(std::map<string, string>& infoFromFile)
@@ -77,6 +81,34 @@ void kslibs::showCommand(std::map<string, string>& infoFromFile)
 {
 	string showCMD = createCommand(infoFromFile);
 	RANGL(rang::style::bold, rang::fg::green, "\nThe following cmd is used to compile the project:\n--> ", showCMD.c_str() );
+}
+
+void kslibs::downloadCommand(const std::vector<std::string>& cmdArgs, const string& libName)
+{
+	// TODO: IMPLEMENT THE YAML PARSER FOR THE URL
+	string DB = consultDB();
+	dataParser dataParse(DB); // use this to get the url of the libName
+	//dataParse.printDataLib();
+
+	string nameFile;
+	string url = libName; // the second comand argument is waht gets downloaded
+	//#warning URL IS NOT DEFINED LACK A YAML PARSER	
+	for (uint8_t i = url.size() - 1; i > 0; --i)
+	{
+		if ((url[i] == '/') || (url[i] == '\\'))
+		{
+			++i;
+			do
+			{
+				nameFile.push_back(url[i]);
+				++i;
+			} while(i < url.size());
+			break;
+		}
+	}
+	HTTPDownloader downloader;
+	FILE* out;
+	downloader.download(url, out, nameFile);
 }
 
 string kslibs::createCommand(std::map<string, string>& infoAboutProj)
@@ -273,6 +305,7 @@ void kslibs::printHelp(std::map<string, string>& infoFromFile)
 	RANGL(rang::style::bold, rang::fg::yellow,"COMPILE project:\t\t",rang::style::reversed      ,rang::fg::black,"-c");
 	RANGL(rang::style::bold, rang::fg::yellow,"EDIT configuration:\t\t",rang::style::reversed   ,rang::fg::black,"-ed");
 	RANGL(rang::style::bold, rang::fg::yellow,"SHOW command to compile:\t",rang::style::reversed,rang::fg::black,"-cmd");
+	RANGL(rang::style::bold, rang::fg::yellow,"DOWNLOAD an available lib:\t",rang::style::reversed,rang::fg::black,"-dowl {NAME_OF_LIB}");
 	RANGL(rang::style::bold, rang::fg::yellow," ");
 	RANGL(rang::style::reversed, rang::fg::red,"ACTUAL INFORMATION OF THE PROJECT:");
 	
@@ -288,4 +321,11 @@ void kslibs::printHelp(std::map<string, string>& infoFromFile)
     printf(infoFromFile["LibPath"].c_str());
     printf("\nLib Names:\t");
     printf(infoFromFile["LibNames"].c_str());
+}
+
+string kslibs::consultDB()
+{
+	HTTPDownloader downloader;
+	string downloaded = downloader.download("https://raw.githubusercontent.com/Kripta-Studios/kripta-studios.github.io/master/assets/kslibsDB/ListOfAvailableLibs");
+	return downloaded;
 }

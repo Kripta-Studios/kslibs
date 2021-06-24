@@ -1,6 +1,6 @@
 CXX      := -g++
-CXXFLAGS := -pedantic-errors -Wall -Wextra
-LDFLAGS  := -lstdc++
+CXXFLAGS := -pedantic-errors -Wall -Wextra -O2
+LDFLAGS  := -lstdc++ -lcurl -O2
 BUILD    := .
 OBJ_DIR  := $(BUILD)/obj
 APP_DIR  := $(BUILD)

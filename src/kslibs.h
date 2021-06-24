@@ -6,6 +6,8 @@
 #include "fileManager.h"
 #include "cmdEditor.h"
 #include "macroUtils.h"
+#include "HTTPDownloader.h"
+#include "dataParser.h"
 
 #include <vector>
 #include <string>
@@ -32,8 +34,12 @@ private:
 	void compileCommand(std::map<string, string>& infoFromFile);
 	void editCommand(std::map<string, string>& infoFromFile, string& pathToConfig);
 	void showCommand(std::map<string, string>& infoFromFile);
+	void downloadCommand(const std::vector<std::string>& cmdArgs, const string& libName);
 	string createCommand(std::map<string, string>& infoAboutProj);
 	void printHelp(std::map<string, string>& infoFromFile);
+
+	// Other general functions
+	string consultDB();
 
 public:
 	~kslibs();
