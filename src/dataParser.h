@@ -30,4 +30,6 @@ public:
     void printBuffer() const;
     void printDataLib() const;
 
+    std::map<string, string> getDataLib() const {return dataLib;}
+
 };

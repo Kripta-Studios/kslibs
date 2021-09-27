@@ -56,12 +56,14 @@ void dataParser::parseTokens(const std::vector<char>& buffer)
             sector = true;
             i += 2;
             indexes.first = i;
+            //LOG(indexes.first);
         }
         else if ((buffer[i] == '-') && (buffer[i+1] == '/') && (buffer[i+2] == '-') && (sector == true))
         {
             sector = false;
             i += 2;
             indexes.second = i;
+            //LOG(indexes.second);
             tokenizer(buffer, indexes);
         }
     }
@@ -74,22 +76,25 @@ void dataParser::tokenizer(const std::vector<char>& buffer, std::pair<uint32_t, 
     {
 
         string line;
-        for (int i = 0; i < stringWithContent.size(); ++i)
+        for (int i = 0; i < indexes.second; ++i)
             //LOG(stringWithContent.c_str()[i]);
-
-            if (line.find("libName: ") != std::string::npos)
+            //LOG(line);
+            if (stringWithContent.c_str()[i] == 'l' && stringWithContent.c_str()[i+1] == 'i'
+                && stringWithContent.c_str()[i+2] == 'b' && stringWithContent.c_str()[i+3] == 'N'
+                && stringWithContent.c_str()[i+4] == 'a' && stringWithContent.c_str()[i+5] == 'm'
+                && stringWithContent.c_str()[i+6] == 'e' && stringWithContent.c_str()[i+7] == ':')
             {
+                i += 8;
                 string Var;
-                for (int i = 0; i < line.length(); ++i)
+                if (stringWithContent.c_str()[i-1] == ':' && stringWithContent.c_str()[i] == ' ')
                 {
-                    if (line[i-1] == ':' && line[i] == ' ')
-                    {
-                        for (int j = i+1; j < line.length(); j++)
-                            Var.push_back(line[j]);
-                    }
-                }
-                dataLib["libName"] = Var;
-            }
+                    
+                    for (int j = i+1; stringWithContent.c_str()[j] != ';'; j++)
+                        Var.push_back(stringWithContent.c_str()[j]);
+                }                    
+                if (dataLib["libName"].find(Var) == std::string::npos) 
+                    dataLib["libName"] += Var + ' ';
+            } 
     }
 }
 

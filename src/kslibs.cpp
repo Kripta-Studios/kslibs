@@ -88,10 +88,12 @@ void kslibs::downloadCommand(const std::vector<std::string>& cmdArgs, const stri
 	// TODO: IMPLEMENT THE YAML PARSER FOR THE URL
 	string DB = consultDB();
 	dataParser dataParse(DB); // use this to get the url of the libName
-	//dataParse.printDataLib();
+	dataParse.printDataLib(); 
+	std::map<string, string> availableLibs = dataParse.getDataLib(); // Use this to know what libs can be downloaded, 
+																	// and find their urls to use them in string url = ;
 
 	string nameFile;
-	string url = libName; // the second comand argument is waht gets downloaded
+	string url = libName; // the second command argument is what gets downloaded
 	//#warning URL IS NOT DEFINED LACK A YAML PARSER	
 	for (uint8_t i = url.size() - 1; i > 0; --i)
 	{
