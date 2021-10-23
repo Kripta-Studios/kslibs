@@ -26,6 +26,9 @@ This entire project in this **month of October 2020** is still in the **first ph
 
 In principle, the project is expected to be written **mainly in C and C++**. And for **Windows 10 systems**, although obviously it will try to create compilations for most Linux distributions. If the **community considers** the use of another programming language very necessary, **it will be considered** whether to use a language other than C and C++.
 
+### Thanks to:
+The creator of the Rang mini-lib and to Uli Köhler for the creation of a simple donwloader class, both libs are **public domain**.
+
 ### Contact
 The contact for questions about the project or tell ideas is: _**[Kripta-Studios mail](mailto:kriptastudios@tutamail.com)**_ 
 
