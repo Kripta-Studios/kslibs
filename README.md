@@ -30,7 +30,7 @@ In principle, the project is expected to be written **mainly in C and C++**. And
 The creator of the Rang mini-lib and to Uli Köhler for the creation of a simple donwloader class, both libs are **public domain**.
 
 ### Contact
-The contact for questions about the project or tell ideas is: _**[Kripta-Studios mail](mailto:kriptastudios@tutamail.com)**_ 
+The contact for questions about the project or tell ideas is: _**[Kripta-Studios mail](mailto:kriptastudios@gmail.com)**_ 
 
 You can also check our website [Kripta-Studios WEB](https://kripta-studios.github.io/) to read all the news and future features of this project.
 
